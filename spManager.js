@@ -1,11 +1,13 @@
-const config = require('config')
+const config = require('config');
 const queue = require('queue');
 const utils = require('./utils');
+const timerManager = require('timerManager');
 
 let spManager = {}
 
 spManager.init = function(sp) {
     if (!sp.memory.queues) {
+        timerManager.init();
         sp.memory.queues = {}
         for (let i = 0; i < config.spQueueLv; i++) {
             sp.memory.queues[i] = new queue();
@@ -33,21 +35,19 @@ spManager.run = function(sp) {
             let aCreep = sp.memory.queues[i].dequeue();
             let goSource = aCreep.goSource;
             let directions
-            if (!goSource) {
-                swicth (i) {
-                    case config.spQueueType.source :
-                        goSource = sp.pos.findClosestByRange(FIND_SOURCES)[0];
-                        directions = sp.pos.getDirectionTo(goSource);
-                        for (let j in aCreep.body) {
-                            let aBody = aCreep.body[j];
-                            if (aBody == WORK) {
-                                Memory.sources[goSource.id].workNum += 1;
-                            }
+            switch (!goSource && i) {
+                case config.spQueueType.source :
+                    goSource = sp.pos.findClosestByRange(FIND_SOURCES)[0];
+                    directions = sp.pos.getDirectionTo(goSource);
+                    for (let j in aCreep.body) {
+                        let aBody = aCreep.body[j];
+                        if (aBody == WORK) {
+                            Memory.sources[goSource.id].workNum += 1;
                         }
-                        break;
-                    default:
-                        break;
-                }
+                    }
+                    break;
+                default:
+                    break;
             }
             sp.spawnCreep(aCreep.body, utils.genCreepName(aCreep.role), {
                 dryRun : true,
@@ -56,9 +56,11 @@ spManager.run = function(sp) {
                     role : aCreep.role
                 }
             });
-            (window.setTimeout(function(aCreep) {
+
+            let cb = function() {
                 sp.memory.queues[i].enqueue(aCreep);
-            }, config.creepDeadTime))(aCreep)
+            }
+            timerManager.setAlarm(cb, 1500);
         }
     }
 }
