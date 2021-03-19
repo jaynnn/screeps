@@ -13,6 +13,7 @@ spManager.init = function(sp) {
             sp.memory.queues[i] = new queue();
             if (i==0) {
                 sp.memory.queue.enqueue(config.baseCfg.creep);
+                sp.memory.queue.enqueue(config.baseCfg.dragCreep);
             }
             Memory.sources = {}
             let sources = sp.room.find(FIND_SOURCE)
@@ -33,12 +34,12 @@ spManager.run = function(sp) {
     for (let i = 0; i < config.spQueueLv; i++) {
         if (!sp.memory.queues[i].isEmpty()) {
             let aCreep = sp.memory.queues[i].dequeue();
-            let goSource = aCreep.goSource;
-            let directions
+            let goSource = aCreep.goSourceId && Gmae.findObjectById(aCreep.goSourceId) or {};
+            let destinationId = goSource.id
             switch (!goSource && i) {
                 case config.spQueueType.source :
                     goSource = sp.pos.findClosestByRange(FIND_SOURCES)[0];
-                    directions = sp.pos.getDirectionTo(goSource);
+                    destinationId = sp.pos.getDirectionTo(goSource).id;
                     for (let j in aCreep.body) {
                         let aBody = aCreep.body[j];
                         if (aBody == WORK) {
@@ -51,16 +52,17 @@ spManager.run = function(sp) {
             }
             sp.spawnCreep(aCreep.body, utils.genCreepName(aCreep.role), {
                 dryRun : true,
-                directions : directions,
+                destinationId : destinationId,
                 memory : {
-                    role : aCreep.role
+                    role : aCreep.role,
+                    status : config.creepStatus.free
                 }
             });
 
             let cb = function() {
                 sp.memory.queues[i].enqueue(aCreep);
             }
-            timerManager.setAlarm(cb, 1500);
+            timerManager.setAlarm(cb, config.creepDeadTime);
         }
     }
 }

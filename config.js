@@ -5,7 +5,7 @@ const utils = require("./utils");
         0 : {
             sourceCreep : {
                 workNum : 2,
-                workBody : [MOVE, WORK, WORK, CARRY],
+                workBody : [WORK, WORK, CARRY, CARRY],
                 carryPerWork : 2,
                 carryBody : [MOVE, MOVE, CARRY, CARRY, CARRY, CARRY],
             }
@@ -39,6 +39,10 @@ const utils = require("./utils");
          creep = {
             role = "base",
             body = [MOVE, WORK, CARRY],
+         },
+         dragCreep = {
+            role = "drager",
+            body = [MOVE, MOVE, MOVE],
          }
      },
 
@@ -52,5 +56,17 @@ const utils = require("./utils");
          workNum : 6
      },
 
-     creepDeadTime : 1500000,
+     creepStatus : {
+         free : 0,
+         busy : 1
+     },
+
+     creepType : {
+         base : "base",
+         drager : "drager",
+         soWorker : "source_worker",
+         soCarryer : "source_carryer",
+     },
+
+     creepDeadTime : 1500,
  }

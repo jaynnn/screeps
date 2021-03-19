@@ -7,16 +7,16 @@ timerManager.init = function() {
 
 timerManager.tick = function() {
     let alarmMap = Memory.timer.alarmMap || {};
-    if (alarmMap[cpu.time]) {
-        for (let i in alarmMap[cpu.time]) {
-            alarmMap[cpu.time][i]();
+    if (alarmMap[Game.time]) {
+        for (let i in alarmMap[Game.time]) {
+            alarmMap[Game.time][i]();
         }
     }
 }
 
 timerManager.setAlarm = function(func, sec) {
     let alarmMap = Memory.timer.alarmMap;
-    sec += cpu.time;
+    sec += Game.time;
     alarmMap[sec] = alarmMap[sec] || [];
     alarmMap[sec].push(func);
 }
