@@ -2,7 +2,7 @@ const config = require("./config");
 
 let creepManager = {}
 
-creepManager.init = function() {
+creepManager.init = function(sp) {
 
 }
 
