@@ -28,7 +28,7 @@ spManager.run = function(sp) {
     for (let i = 0; i < config.spQueueLv; i++) {
         if (!sp.memory.queues[i].isEmpty()) {
             let aCreep = sp.memory.queues[i].dequeue();
-            let goSource = aCreep.goSourceId && Gmae.findObjectById(aCreep.goSourceId) or {};
+            let goSource = aCreep.goSourceId && Gmae.findObjectById(aCreep.goSourceId)|| {};
             let destinationId = goSource.id
             switch (!goSource && i) {
                 case config.spQueueType.source :
