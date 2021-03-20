@@ -2,12 +2,16 @@ const config = require('config');
 const queue = require('queue');
 const utils = require('./utils');
 const timerManager = require('timerManager');
+const sourceManager = require('sourceManager');
+const creepManager = require('./creepManager');
 
 let spManager = {}
 
 spManager.init = function(sp) {
     if (!sp.memory.queues) {
         timerManager.init();
+        sourceManager.init();
+        creepManager.init();
         sp.memory.queues = {}
         for (let i = 0; i < config.spQueueLv; i++) {
             sp.memory.queues[i] = new queue();
@@ -15,19 +19,9 @@ spManager.init = function(sp) {
                 sp.memory.queue.enqueue(config.baseCfg.creep);
                 sp.memory.queue.enqueue(config.baseCfg.dragCreep);
             }
-            Memory.sources = {}
-            let sources = sp.room.find(FIND_SOURCE)
-            for (let j in sources) {
-                let source = sources[j];
-                Memory.sources[source.id] = {
-                    maxWorkNum : (source.energyCapacity / 300 ) / (2 + 1),
-                    workNum : 0
-                };
-            }
         }
-    } else {
-        return
     }
+    return
 },
 
 spManager.run = function(sp) {

@@ -3,6 +3,18 @@ const utils = require("./utils")
 
 let sourceManager = {}
 
+sourceManager.init = function() {
+    Memory.sources = {}
+    let sources = sp.room.find(FIND_SOURCE)
+    for (let j in sources) {
+        let source = sources[j];
+        Memory.sources[source.id] = {
+            maxWorkNum : (source.energyCapacity / 300 ) / (2 + 1),
+            workNum : 0
+        };
+    }
+}
+
 sourceManager.run = function(sp) {
     for (let i in Memory.sources) {
         let source = Memory.sources[i];
