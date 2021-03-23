@@ -53,9 +53,14 @@ creepManager.type2Deal = {
             }
         });
         if(target) {
+            let tmpPath = creep.memory.tmpPath
             if(creep.pull(target) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(target);
+                if (!tmpPath) {
+                    tmpPath = pathManager.createTmpPath(creep.room, creep.pos, target.pos)
+                }
+                creep.moveByPath(tmpPath);
             } else {
+                if (tmpPath) creep.memory.tmpPath = undefined;
                 target.move(creep);
                 if(creep.pos.isNearTo(Game.getObjectById(target.memory.destinationId))) {
                     creep.move(creep.pos.getDirectionTo(target));
@@ -74,7 +79,7 @@ creepManager.type2Deal = {
         }
     },
     [config.creepType.soCarry] : function(creep) {
-        
+
     }
 }
 
