@@ -54,10 +54,6 @@ const utils = require("./utils");
         low : 2,
      },
 
-     spQueueType : {
-         source : 0,
-     },
-
      sourceCfg : {
          workNum : 6
      },

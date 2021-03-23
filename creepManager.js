@@ -35,7 +35,7 @@ creepManager.commonMove = function(creep, destinationId) {
 creepManager.type2Deal = {
     [config.creepType.base] : function(creep) {
         if (creep.store.getFreeCapacity() > 0) {
-            const source = creep.room.pos.find(FIND_SOURCE)[0];
+            const source = Game.getObjectById(creep.memory.destinationId);
             if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
                 let pathObj = pathManager.getPathTo(creep.room, creep.pos, source.pos);
                 creep.moveByPath(pathObj.path);
@@ -43,7 +43,6 @@ creepManager.type2Deal = {
         } else {
             creepManager.takeBackSpawn(creep, [STRUCTURE_SPAWN]);
         }
-
     },
     [config.creepType.drager] : function(creep) {
         const target = creep.pos.findClosestByRange(FIND_MY_CREEPS, {
@@ -81,11 +80,8 @@ creepManager.createCreep = function(sp, queueLv, creepObj) {
 creepManager.run = function() {
     for (let i in Game.creeps) {
         let aCreep = Game.creeps[i];
-        if (aCreep.memory.status == config.creepStatus.free) {
-            if (creepManager.type2Deal[aCreep.memory.role]) {
-                creepManager.type2Deal[aCreep.memory.role](aCreep);
-            }
-            aCreep.memory.status = config.creepStatus.busy
+        if (creepManager.type2Deal[aCreep.memory.role]) {
+            creepManager.type2Deal[aCreep.memory.role](aCreep);
         }
     }
 }

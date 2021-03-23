@@ -4,15 +4,18 @@ const utils = require('./utils');
 const timerManager = require('timerManager');
 const sourceManager = require('sourceManager');
 const creepManager = require('./creepManager');
+const pathManager = require('./pathManager');
+const logger = require('logger')
 
 let spManager = {}
 
 spManager.init = function(sp) {
     if (!sp.memory.queues) {
+        pathManager.init();
         timerManager.init();
         sourceManager.init();
         creepManager.init();
-        sp.memory.queues = {}
+        sp.memory.queues = {};
         for (let i = 0; i < config.spQueueLv; i++) {
             sp.memory.queues[i] = new queue();
             if (i==config.spQueueLvs.base) {
@@ -26,37 +29,35 @@ spManager.init = function(sp) {
 
 spManager.run = function(sp) {
     for (let i = 0; i < config.spQueueLv; i++) {
-        if (!sp.memory.queues[i].isEmpty()) {
+        while (!sp.memory.queues[i].isEmpty()) {
             let aCreep = sp.memory.queues[i].dequeue();
-            let goSource = aCreep.goSourceId && Gmae.findObjectById(aCreep.goSourceId)|| {};
+            let goSource = aCreep.goSourceId && Gmae.findObjectById(aCreep.goSourceId) || {};
             let destinationId = goSource.id
-            switch (!goSource && i) {
-                case config.spQueueType.source :
+            switch (!destinationId && i) {
+                case config.spQueueLvs.base :
                     goSource = sp.pos.findClosestByRange(FIND_SOURCES)[0];
                     destinationId = sp.pos.getDirectionTo(goSource).id;
-                    for (let j in aCreep.body) {
-                        let aBody = aCreep.body[j];
-                        if (aBody == WORK) {
-                            Memory.sources[goSource.id].workNum += 1;
-                        }
-                    }
                     break;
                 default:
+                    console.log("ERROR!!!!! no destination!!!");
                     break;
             }
             sp.spawnCreep(aCreep.body, utils.genCreepName(aCreep.role), {
                 dryRun : true,
-                destinationId : destinationId,
                 memory : {
                     role : aCreep.role,
-                    status : config.creepStatus.free
+                    status : config.creepStatus.free,
+                    destinationId : destinationId,
                 }
             });
+            sourceManager.onCreepBorn(aCreep, goSource.id);
 
             let cb = function() {
                 sp.memory.queues[i].enqueue(aCreep);
             }
             timerManager.setAlarm(cb, config.creepDeadTime);
+
+            logger.log("spManager|| a creep born", aCreep);
         }
     }
 }

@@ -36,6 +36,15 @@ var utils = {
         return sp.room.controller.level;
     },
 
+    getCreepBodyNumByType : function(creep, type) {
+        let count = 0;
+        for (let i in creep.body) {
+            if (type == creep.body[i]) 
+                count++;
+        }
+        return count;
+    },
+
     deepClone : function(initalObj, finalObj) {    
         var obj = finalObj || {};    
         for (var i in initalObj) {        

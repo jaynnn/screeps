@@ -16,6 +16,10 @@ sourceManager.init = function() {
     }
 }
 
+sourceManager.onCreepBorn = function(creep, sourceId) {
+    Memory.sources[sourceId].workNum = utils.getCreepBodyNumByType(creep, WORK);
+}
+
 sourceManager.run = function(sp) {
     for (let i in Memory.sources) {
         let source = Memory.sources[i];

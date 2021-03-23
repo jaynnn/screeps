@@ -1,15 +1,19 @@
-module.exports = function() {
-    var events = {}
-    this.bind = function(id, cb) {
+let eventManager = {}
 
-    },
-
-    this.event = function(id) {
-
-    },
-
-    this.unbind = function(id) {
-
-    }
+eventManager.init = function() {
+    Memory.events = {}
 }
 
+eventManager.bind = function(id, cb) {
+
+},
+
+eventManager.event = function(id) {
+
+},
+
+eventManager.unbind = function(id) {
+
+}
+
+module.exports = eventManager
