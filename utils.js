@@ -1,12 +1,5 @@
-var gEnum = require('enum') 
-
 var utils = {
-    // get cur len of worder by type
-    getWorkerNumByType : function(type) {
-        return _.filter(Game.creeps, (creep) => creep.memory.role == type);
-    },
-
-    getNearSource :function(creepPos, sources) {
+    getNearSource : function(creepPos, sources) {
         var min = Number.MAX_SAFE_INTEGER;
         var index = 0;
         for (var i = 0; i < sources.length; i++) {

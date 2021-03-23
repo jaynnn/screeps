@@ -36,13 +36,13 @@ const utils = require("./utils");
      },
 
      baseCfg : {
-         creep = {
-            role = "base",
-            body = [MOVE, WORK, CARRY],
+         creep : {
+            role : "base",
+            body : [MOVE, WORK, CARRY],
          },
-         dragCreep = {
-            role = "drager",
-            body = [MOVE, MOVE, MOVE],
+         dragCreep : {
+            role : "drager",
+            body : [MOVE, MOVE, MOVE],
          }
      },
 

@@ -13,14 +13,14 @@ spManager.init = function(sp) {
     if (!sp.memory.queues) {
         pathManager.init();
         timerManager.init();
-        sourceManager.init();
+        sourceManager.init(sp);
         creepManager.init();
         sp.memory.queues = {};
         for (let i = 0; i < config.spQueueLv; i++) {
             sp.memory.queues[i] = new queue();
             if (i==config.spQueueLvs.base) {
-                sp.memory.queue.enqueue(config.baseCfg.creep);
-                sp.memory.queue.enqueue(config.baseCfg.dragCreep);
+                sp.memory.queues[i].enqueue(config.baseCfg.creep);
+                sp.memory.queues[i].enqueue(config.baseCfg.dragCreep);
             }
         }
     }
@@ -37,7 +37,6 @@ spManager.run = function(sp) {
             switch (!destinationId && i) {
                 case config.spQueueLvs.base :
                     goSource = sp.pos.findClosestByRange(FIND_SOURCES)[0];
-                    destinationId = sp.pos.getDirectionTo(goSource).id;
                     break;
                 default:
                     console.log("ERROR!!!!! no destination!!!");
@@ -45,10 +44,11 @@ spManager.run = function(sp) {
             }
             let ret = sp.spawnCreep(aCreep.body, utils.genCreepName(aCreep.role), {
                 dryRun : true,
+                directions : sp.pos.getDirectionTo(goSource),
                 memory : {
                     role : aCreep.role,
                     status : config.creepStatus.free,
-                    destinationId : destinationId,
+                    destinationId : goSource.id
                 }
             });
             if (ret == 0) {

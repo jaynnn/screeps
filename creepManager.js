@@ -76,7 +76,6 @@ creepManager.type2Deal = {
             creep.harvest(source); 
         } else {
             creep.drop(RESOURCE_ENERGY);
-            if (!Game.flags[])
         }
     },
     [config.creepType.soCarry] : function(creep) {

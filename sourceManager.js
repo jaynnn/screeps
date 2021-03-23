@@ -4,9 +4,9 @@ const creepManager = require('creepManager')
 
 let sourceManager = {}
 
-sourceManager.init = function() {
+sourceManager.init = function(sp) {
     Memory.sources = {}
-    let sources = sp.room.find(FIND_SOURCE)
+    let sources = sp.room.find(FIND_SOURCES)
     for (let j in sources) {
         let source = sources[j];
         Memory.sources[source.id] = {
@@ -45,3 +45,5 @@ sourceManager.run = function(sp) {
         }
     }
 }
+
+module.exports = sourceManager
