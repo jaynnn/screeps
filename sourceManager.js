@@ -1,5 +1,6 @@
 const config = require("./config")
 const utils = require("./utils")
+const creepManager = require('creepManager')
 
 let sourceManager = {}
 
@@ -9,7 +10,7 @@ sourceManager.init = function() {
     for (let j in sources) {
         let source = sources[j];
         Memory.sources[source.id] = {
-            maxWorkNum : (source.energyCapacity / 300 ) / (2 + 1),
+            maxWorkNum : (source.energyCapacity / 300 ) / (2 + 1), // work and drop
             workNum : 0
         };
     }
@@ -23,14 +24,14 @@ sourceManager.run = function(sp) {
             let leftWork = Math.ceil((source.maxWorkNum - Memory.soureCreep.workNum) /  lvCfg.workNum)
             let leftCarry = leftWork * lvCfg.carryPerWork
             while(leftWork--) {
-                sp.memory.queues[1].enqueue({
+                creepManager.createCreep(sp, config.spQueueLvs.normal, {
                     role : config.creepType.soWorker,
                     goSourceId : source.id,
                     body : lvCfg.workBody,
                 });
             }
             while(leftCarry--) {
-                sp.memory.queues[1].enqueue({
+                creepManager.createCreep(sp, config.spQueueLvs.normal, {
                     role : config.creepType.soCarryer,
                     goSourceId : source.id,
                     body : lvCfg.carryBody,

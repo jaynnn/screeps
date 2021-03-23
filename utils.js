@@ -34,7 +34,24 @@ var utils = {
 
     getControlerLv : function(sp) {
         return sp.room.controller.level;
-    }
+    },
+
+    deepClone : function(initalObj, finalObj) {    
+        var obj = finalObj || {};    
+        for (var i in initalObj) {        
+            var prop = initalObj[i]; 
+            if(prop === obj) {            
+                continue;
+            }        
+            if (typeof prop === 'object') {
+                obj[i] = (prop.constructor === Array) ? [] : {};            
+                arguments.callee(prop, obj[i]);
+            } else {
+                obj[i] = prop;
+            }
+        }
+        return obj;
+    },
 }
 
 utils.genCreepName = function(name) {

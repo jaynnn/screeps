@@ -15,7 +15,7 @@ spManager.init = function(sp) {
         sp.memory.queues = {}
         for (let i = 0; i < config.spQueueLv; i++) {
             sp.memory.queues[i] = new queue();
-            if (i==0) {
+            if (i==config.spQueueLvs.base) {
                 sp.memory.queue.enqueue(config.baseCfg.creep);
                 sp.memory.queue.enqueue(config.baseCfg.dragCreep);
             }

@@ -48,6 +48,12 @@ const utils = require("./utils");
 
      spQueueLv : 3,
 
+     spQueueLvs : {
+        base : 0,
+        normal : 1,
+        low : 2,
+     },
+
      spQueueType : {
          source : 0,
      },
