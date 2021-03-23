@@ -7,7 +7,7 @@ creepManager.init = function(sp) {
 
 }
 
-creepManager.takeBackSpawn = function(creep, structures) {
+creepManager.takeBackResource = function(creep, structures) {
     var targets = creep.room.find(FIND_STRUCTURES, {
         filter: (structure) => {
             return (structures.indexOf(structure.structureType) > -1) &&
@@ -41,7 +41,7 @@ creepManager.type2Deal = {
                 creep.moveByPath(pathObj.path);
             }
         } else {
-            creepManager.takeBackSpawn(creep, [STRUCTURE_SPAWN]);
+            creepManager.takeBackResource(creep, [STRUCTURE_SPAWN]);
         }
     },
     [config.creepType.drager] : function(creep) {
@@ -76,6 +76,7 @@ creepManager.type2Deal = {
             creep.harvest(source); 
         } else {
             creep.drop(RESOURCE_ENERGY);
+            if (!Game.flags[])
         }
     },
     [config.creepType.soCarry] : function(creep) {
