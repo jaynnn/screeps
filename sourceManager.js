@@ -24,7 +24,7 @@ sourceManager.run = function(sp) {
     for (let i in Memory.sources) {
         let source = Memory.sources[i];
         let lvCfg = config.levelCfg[utils.getControlerLv(sp)];
-        while (Memory.soureCreep.workNum < source.maxWorkNum) {
+        if (Memory.soureCreep.workNum < source.maxWorkNum) {
             let leftWork = Math.ceil((source.maxWorkNum - Memory.soureCreep.workNum) /  lvCfg.workNum)
             let leftCarry = leftWork * lvCfg.carryPerWork
             while(leftWork--) {

@@ -1,6 +1,7 @@
 const levelDeal = require('levelDeal')
 const spManager = require('spManager')
 const timerManager = require('timerManager')
+const sourceManager = require('sourceManager')
 // const g_event = require('event')()
 
 module.exports.loop = function() {
@@ -10,6 +11,7 @@ module.exports.loop = function() {
         if (!c) continue;
         spManager.init(sp);
         spManager.run(sp);
+        sourceManager.run(sp);
         levelDeal[c.level](sp);
     }
     timerManager.tick();

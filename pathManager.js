@@ -19,20 +19,30 @@ pathManager.createPath = function(room, startPos, endPos) {
 }
 
 // 到终点的路无法上路时找到离该路最近的点，连上去做支线
-pathManager.findBranchPath = function(room, curPos, path) {
+pathManager.findBranchPath = function(room, curPos, path, endPos) {
     let myPath = {}
     utils.deepClone(room.deserializePath(path), myPath);
     let minn = 10000000;
-    let minnPos
+    let minnPos = 0;
     for (let i in myPath) {
         let posObj = myPath[i];
-        let distance = math.sqrt((curPos.x - posObj.x)(curPos.x - posObj.x) + (curPos.y - posObj.y)(curPos.y - posObj.y));
+        let distance = utils.getDistance(curPos, posObj);
         if (distance < minn) {
             minn = distance;
-            minnPos = posObj;
+            minnPosIndex = i;
         }
     }
-    return pathManager.createPath(room, curPos, minnPos);
+    return pathManager.createPath(room, curPos, myPath[minnPosIndex]);
+}
+
+pathManager.concatPath = function(room) {
+    let len=arguments.length;
+    let afterList = [];
+    for (let i = 1; i < len; i++) {
+        let aPath = room.deserializePath(arguments[i])
+        afterList.push.apply(afterList, aPath);
+    }
+    return afterList;
 }
 
 pathManager.getPathByKey = function(posKey) {

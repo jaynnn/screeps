@@ -28,9 +28,10 @@ spManager.init = function(sp) {
 },
 
 spManager.run = function(sp) {
+    let isOk = true
     for (let i = 0; i < config.spQueueLv; i++) {
         while (!sp.memory.queues[i].isEmpty()) {
-            let aCreep = sp.memory.queues[i].dequeue();
+            let aCreep = sp.memory.queues[i].peek();
             let goSource = aCreep.goSourceId && Gmae.findObjectById(aCreep.goSourceId) || {};
             let destinationId = goSource.id
             switch (!destinationId && i) {
@@ -42,7 +43,7 @@ spManager.run = function(sp) {
                     console.log("ERROR!!!!! no destination!!!");
                     break;
             }
-            sp.spawnCreep(aCreep.body, utils.genCreepName(aCreep.role), {
+            let ret = sp.spawnCreep(aCreep.body, utils.genCreepName(aCreep.role), {
                 dryRun : true,
                 memory : {
                     role : aCreep.role,
@@ -50,15 +51,23 @@ spManager.run = function(sp) {
                     destinationId : destinationId,
                 }
             });
-            sourceManager.onCreepBorn(aCreep, goSource.id);
-
-            let cb = function() {
-                sp.memory.queues[i].enqueue(aCreep);
+            if (ret == 0) {
+                sourceManager.onCreepBorn(aCreep, goSource.id);
+                sp.memory.queues[i].dequeue();
+    
+                let cb = function() {
+                    sp.memory.queues[i].enqueue(aCreep);
+                }
+                timerManager.setAlarm(cb, config.creepDeadTime);
+    
+                logger.log("spManager|| a creep born", aCreep);
+            } else {
+                isOk = false
+                loggger.log("try spawn creep but ret =", ret);
+                break;
             }
-            timerManager.setAlarm(cb, config.creepDeadTime);
-
-            logger.log("spManager|| a creep born", aCreep);
         }
+        if (!isOk) break;
     }
 }
 

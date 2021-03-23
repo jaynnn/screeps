@@ -1,8 +1,8 @@
-const queue = require ('queue')
+const creepManager = require('./creepManager')
 
 module.exports = {
     0 : function(sp) {
-        
+        creepManager.run();
     },
     1 : function(sp) {
 

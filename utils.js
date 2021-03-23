@@ -61,6 +61,10 @@ var utils = {
         }
         return obj;
     },
+
+    getDistance : function(startPos, endPos) {
+        return math.sqrt((startPos.x - endPos.x)(startPos.x - endPos.x) + (startPos.y - endPos.y)(startPos.y - endPos.y));
+    }
 }
 
 utils.genCreepName = function(name) {
