@@ -66,10 +66,15 @@ creepManager.type2Deal = {
         }
     },
     [config.creepType.soWroker] : function(creep) {
-
+        const source = Game.getObjectById(creep.memory.destinationId);
+        if (creep.store.getFreeCapacity() > 0) {
+            creep.harvest(source); 
+        } else {
+            creep.drop(RESOURCE_ENERGY);
+        }
     },
     [config.creepType.soCarry] : function(creep) {
-
+        
     }
 }
 
