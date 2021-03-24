@@ -151,6 +151,7 @@ const utils = require("./utils");
          soCarryer : "source_carryer",
          upper : "upgradger",
          builder : "builder",
+         towerGiver : "towerGiver",
      },
 
      creepDeadTime : 1500,
@@ -170,6 +171,12 @@ const utils = require("./utils");
 
      flagSubColor_creep : {
          soWorker : COLOR_BLUE,
+     },
+
+     takeDropsTo : {
+         toStructure : 0,
+         toControler : 1,
+         toSite : 2
      }
 
  }

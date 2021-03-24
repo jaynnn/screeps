@@ -8,28 +8,43 @@ creepManager.init = function(sp) {
 
 }
 
-creepManager.takeBackResource = function(creep, structures) {
-    var targets = creep.room.find(FIND_STRUCTURES, {
-        filter: (structure) => {
-            return (structures.indexOf(structure.structureType) > -1) &&
-                structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
-        }
-    });
-    if(targets.length > 0) {
-        if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {   
-            let pathObj = pathManager.getPathTo(creep.room, creep.pos, targets[0].pos);
+creepManager.takeDrop2Func ={
+    [config.takeDropsTo.toControler] : function(creep) {
+        if (creep.upgradeController(creep.room.controler) == ERR_NOT_IN_RANGE) {
+            let pathObj = pathManager.getPathTo(creep.room, creep.pos, creep.room.controler);
             creep.moveByPath(pathObj.path);
         }
+    },
+    [config.takeDropsTo.toStructure] : function(creep, structures) {
+        var targets = creep.room.find(FIND_STRUCTURES, {
+            filter: (structure) => {
+                return (structures.indexOf(structure.structureType) > -1) &&
+                    structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
+            }
+        });
+        if(targets.length > 0) {
+            if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {   
+                let pathObj = pathManager.getPathTo(creep.room, creep.pos, targets[0].pos);
+                creep.moveByPath(pathObj.path);
+            }
+        }
+    },
+    [config.takeDropsTo.toSite] : function(creep) {
+        const target = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
+        if(target) {
+            let tmpPath = creep.memory.tmpPath
+            if(creep.build(target) == ERR_NOT_IN_RANGE) {
+                if(!tmpPath) {
+                    tmpPath = pathManager.createTmpPath(creep.room, creep.pos, target.pos);
+                    creep.memory.tmpPath = tmpPath
+                }
+                creep.moveByPath(tmpPath);
+            } else {
+                creep.memory.tmpPath = undefined;
+            }
+        }
     }
-}
-
-creepManager.takeToControler = function(creep) {
-    if (creep.upgradeController(creep.room.controler) == ERR_NOT_IN_RANGE) {
-        let pathObj = pathManager.getPathTo(creep.room, creep.pos, creep.room.controler);
-        creep.moveByPath(pathObj.path);
-    }
-}
-
+} 
 creepManager.commonMove = function(creep, destPos) {
     let pathObj = pathManager.getPathTo(creep.room, destPos);
     let myPath = pathObj.path;
@@ -39,18 +54,14 @@ creepManager.commonMove = function(creep, destPos) {
     creep.moveByPath(myPath);
 }
 
-creepManager.takeBackDrops = function(creep, structures, toControler) {
+creepManager.takeBackDrops = function(creep, dests, toWhere) {
     const targets = creep.room.find(FIND_DROPPED_RESOURCES);
     if(creep.store.getFreeCapacity() > 0) {
         if (target.length && creep.pickup(targets[0]) == ERR_NOT_IN_RANGE){
             creepManager.commonMove(creep, target[0].pos);
         }
     } else {
-        if (toControler) {
-            creepManager.takeToControler(creep)
-        } else {
-            creepManager.takeBackResource(creep, structures);
-        }
+        creepManager.takeDrop2Func[toWhere](creep, dests);
     }
 }
 
@@ -79,6 +90,7 @@ creepManager.type2Deal = {
             if(creep.pull(target) == ERR_NOT_IN_RANGE) {
                 if (!tmpPath) {
                     tmpPath = pathManager.createTmpPath(creep.room, creep.pos, target.pos)
+                    creep.memory.tmpPath = tmpPath
                 }
                 creep.moveByPath(tmpPath);
             } else {
@@ -103,14 +115,17 @@ creepManager.type2Deal = {
         }
     },
     [config.creepType.soCarry] : function(creep) {
-        creepManager.takeBackDrops(creep, [STRUCTURE_SPAWN, STRUCTURE_EXTENSION]);
+        creepManager.takeBackDrops(creep, [STRUCTURE_SPAWN, STRUCTURE_EXTENSION], config.takeDropsTo.toStructure);
     },
     [config.creepType.upper] : function(creep) {
-        creepManager.takeBackDrops(creep, [STRUCTURE_CONTROLLER], true);
+        creepManager.takeBackDrops(creep, [STRUCTURE_CONTROLLER], config.takeDropsTo.toControler);
     },
     [config.creepType.builder] : function(creep) {
-        
+        creepManager.takeBackDrops(creep, [STRUCTURE_CONTROLLER], config.takeDropsTo.toSite);
     },
+    [config.creepType.towerGiver] : function(creep) {
+        creepManager.takeBackDrops(creep, [STRUCTURE_TOWER], config.takeDropsTo.toStructure);
+    }
 }
 
 creepManager.createCreep = function(sp, queueLv, creepObj) {
