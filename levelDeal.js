@@ -46,5 +46,5 @@ let run = function(lv, sp) {
 }
 
 module.exports = {
-    run = run,
+    run : run,
 }
