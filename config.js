@@ -14,15 +14,15 @@ const utils = require("./utils");
             sourceCreep : {
                 workNum : 2,
                 workBody : [WORK, WORK, CARRY, CARRY],
-                carryPerWork : 2,
+                carryPerWork : 3,
                 carryBody : [MOVE, MOVE, CARRY, CARRY, CARRY, CARRY],
             },
         },
         2 : {
             sourceCreep : {
-                workNum : 2,
+                workNum : 4,
                 workBody : [WORK, WORK, WORK, WORK, CARRY, CARRY],
-                carryPerWork : 2,
+                carryPerWork : 3,
                 carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
             },
             sites : {
@@ -32,9 +32,9 @@ const utils = require("./utils");
         },
         3 : {
             sourceCreep : {
-                workNum : 2,
+                workNum : 4,
                 workBody : [WORK, WORK, WORK, WORK, CARRY, CARRY],
-                carryPerWork : 2,
+                carryPerWork : 3,
                 carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
             },
             sites : {
@@ -45,9 +45,9 @@ const utils = require("./utils");
         },
         4 : {
             sourceCreep : {
-                workNum : 2,
-                workBody : [WORK, WORK, WORK, WORK, CARRY, CARRY],
-                carryPerWork : 2,
+                workNum : 6,
+                workBody : [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY],
+                carryPerWork : 4,
                 carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
             },
             sites : {
@@ -60,9 +60,9 @@ const utils = require("./utils");
         },
         5 : {
             sourceCreep : {
-                workNum : 2,
-                workBody : [WORK, WORK, WORK, WORK, CARRY, CARRY],
-                carryPerWork : 2,
+                workNum : 6,
+                workBody : [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY],
+                carryPerWork : 4,
                 carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
             },
             sites : {
@@ -74,9 +74,9 @@ const utils = require("./utils");
         },
         6 : {
             sourceCreep : {
-                workNum : 2,
-                workBody : [WORK, WORK, WORK, WORK, CARRY, CARRY],
-                carryPerWork : 2,
+                workNum : 6,
+                workBody : [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY],
+                carryPerWork : 4,
                 carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
             },
             sites : {
@@ -88,9 +88,9 @@ const utils = require("./utils");
         },
         7 : {
             sourceCreep : {
-                workNum : 2,
-                workBody : [WORK, WORK, WORK, WORK, CARRY, CARRY],
-                carryPerWork : 2,
+                workNum : 6,
+                workBody : [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY],
+                carryPerWork : 4,
                 carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
             },
             sites : {
@@ -102,9 +102,9 @@ const utils = require("./utils");
         },
         8 : {
             sourceCreep : {
-                workNum : 2,
-                workBody : [WORK, WORK, WORK, WORK, CARRY, CARRY],
-                carryPerWork : 2,
+                workNum : 6,
+                workBody : [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY],
+                carryPerWork : 4,
                 carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
             },
             sites : {

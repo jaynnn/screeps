@@ -12,7 +12,6 @@ let execOnce = function(lv, sp) {
 
 let deals ={
     0 : function(sp) {
-        creepManager.run();
     },
     1 : function(sp) {
 
@@ -43,6 +42,7 @@ let deals ={
 let run = function(lv, sp) {
     execOnce(lv, sp);
     deals[lv](sp);
+    creepManager.run();
 }
 
 module.exports = {

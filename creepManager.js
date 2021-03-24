@@ -118,14 +118,14 @@ creepManager.type2Deal = {
         creepManager.takeBackDrops(creep, [STRUCTURE_SPAWN, STRUCTURE_EXTENSION], config.takeDropsTo.toStructure);
     },
     [config.creepType.upper] : function(creep) {
-        creepManager.takeBackDrops(creep, [STRUCTURE_CONTROLLER], config.takeDropsTo.toControler);
+        creepManager.takeBackDrops(creep, [], config.takeDropsTo.toControler);
     },
     [config.creepType.builder] : function(creep) {
-        creepManager.takeBackDrops(creep, [STRUCTURE_CONTROLLER], config.takeDropsTo.toSite);
+        creepManager.takeBackDrops(creep, [], config.takeDropsTo.toSite);
     },
     [config.creepType.towerGiver] : function(creep) {
         creepManager.takeBackDrops(creep, [STRUCTURE_TOWER], config.takeDropsTo.toStructure);
-    }
+    },
 }
 
 creepManager.createCreep = function(sp, queueLv, creepObj) {
