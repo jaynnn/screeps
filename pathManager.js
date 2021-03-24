@@ -1,4 +1,5 @@
 const utils = require("./utils");
+const config = require("config");
 
 let pathManager = {}
 
@@ -15,10 +16,25 @@ pathManager.createPath = function(room, startPos, endPos) {
     return Memory.paths[posKey]
 }
 
+pathManager.getUsedPos = function(room, pos) {
+    let found = room.lookForAtArea(LOOK_FLAGS, pos.y-1, pos.x-1, pos.y+1, pos.x+1, true);
+    let useFlags = [config.flagColor.creep];
+    let usedPoses = [];
+    for (let i in found) {
+        let foundFlag = found[i].flag
+        if (useFlags.indexOf(foundFlag.color) > -1) {
+            usedPoses.push(foundFlag.pos);
+        }
+    }
+    return usedPoses;
+}
+
 pathManager.createTmpPath = function(room, startPos, endPos) {
     let posKey = pathManager.genPosKey(room.name, endPos.x, endPos.y);
     if (Memory.paths[posKey]) return;
-    let aPath = room.findPath(startPos, endPos);
+    let aPath = room.findPath(startPos, endPos, {
+        avoid : pathManager.getUsedPos(endPos),
+    });
     return room.serializePath(aPath);
 }
 

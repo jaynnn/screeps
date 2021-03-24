@@ -12,7 +12,7 @@ module.exports.loop = function() {
         spManager.init(sp);
         spManager.run(sp);
         sourceManager.run(sp);
-        levelDeal[c.level](sp);
+        levelDeal.run(c.level, sp);
     }
     timerManager.tick();
 }

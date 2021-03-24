@@ -1,6 +1,15 @@
 const creepManager = require('./creepManager')
+const structureManager = require('structureManager')
 
-module.exports = {
+function execOnce(lv, sp) {
+    let uniName = 'site_' + lv
+    if (!(global[uniName])) {
+        structureManager.createSites(lv, sp);
+        global.uniName = true;
+    }
+}
+
+let deals ={
     0 : function(sp) {
         creepManager.run();
     },
@@ -28,4 +37,13 @@ module.exports = {
     8 : function(sp) {
 
     },
+}
+
+let run = function(lv, sp) {
+    execOnce(lv, sp);
+    deals[lv](sp);
+}
+
+module.exports = {
+    run = run,
 }

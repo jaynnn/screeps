@@ -68,7 +68,27 @@ const utils = require("./utils");
          drager : "drager",
          soWorker : "source_worker",
          soCarryer : "source_carryer",
+         upper : "upgradger",
+         builder : "builder",
      },
 
      creepDeadTime : 1500,
+
+     flagColor : {
+            creep : COLOR_RED,
+            // COLOR_PURPLE,
+            // COLOR_BLUE,
+            // COLOR_CYAN,
+            // COLOR_GREEN,
+            // COLOR_YELLOW,
+            // COLOR_ORANGE,
+            // COLOR_BROWN,
+            // COLOR_GREY,
+            // COLOR_WHITE
+     },
+
+     flagSubColor_creep : {
+         soWorker : COLOR_BLUE,
+     }
+
  }

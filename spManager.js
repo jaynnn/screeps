@@ -5,7 +5,8 @@ const timerManager = require('timerManager');
 const sourceManager = require('sourceManager');
 const creepManager = require('./creepManager');
 const pathManager = require('./pathManager');
-const logger = require('logger')
+const logger = require('logger');
+const flagManager = require('./flagManager');
 
 let spManager = {}
 
@@ -42,7 +43,8 @@ spManager.run = function(sp) {
                     console.log("ERROR!!!!! no destination!!!");
                     break;
             }
-            let ret = sp.spawnCreep(aCreep.body, utils.genCreepName(aCreep.role), {
+            let creepName = utils.genCreepName(aCreep.role)
+            let ret = sp.spawnCreep(aCreep.body, creepName, {
                 dryRun : true,
                 directions : sp.pos.getDirectionTo(goSource),
                 memory : {
@@ -57,6 +59,7 @@ spManager.run = function(sp) {
     
                 let cb = function() {
                     sp.memory.queues[i].enqueue(aCreep);
+                    flagManager.delFlag(creepName);
                 }
                 timerManager.setAlarm(cb, config.creepDeadTime);
     
