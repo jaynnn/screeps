@@ -8,29 +8,110 @@ const utils = require("./utils");
                 workBody : [WORK, WORK, CARRY, CARRY],
                 carryPerWork : 2,
                 carryBody : [MOVE, MOVE, CARRY, CARRY, CARRY, CARRY],
-            }
+            },
         },
         1 : {
+            sourceCreep : {
+                workNum : 2,
+                workBody : [WORK, WORK, CARRY, CARRY],
+                carryPerWork : 2,
+                carryBody : [MOVE, MOVE, CARRY, CARRY, CARRY, CARRY],
+            },
         },
         2 : {
+            sourceCreep : {
+                workNum : 2,
+                workBody : [WORK, WORK, WORK, WORK, CARRY, CARRY],
+                carryPerWork : 2,
+                carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
+            },
+            sites : {
+                extentions : 5,
+            },
 
         },
         3 : {
+            sourceCreep : {
+                workNum : 2,
+                workBody : [WORK, WORK, WORK, WORK, CARRY, CARRY],
+                carryPerWork : 2,
+                carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
+            },
+            sites : {
+                extentions : 5,
+                tower : 1,
+            },
 
         },
         4 : {
+            sourceCreep : {
+                workNum : 2,
+                workBody : [WORK, WORK, WORK, WORK, CARRY, CARRY],
+                carryPerWork : 2,
+                carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
+            },
+            sites : {
+                extentions : 10,
+                storage : 1,
+                tower : 1,
+                link : 1,
+            },
 
         },
         5 : {
+            sourceCreep : {
+                workNum : 2,
+                workBody : [WORK, WORK, WORK, WORK, CARRY, CARRY],
+                carryPerWork : 2,
+                carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
+            },
+            sites : {
+                extentions : 10,
+                tower : 1,
+                link : 1,
+            },
 
         },
         6 : {
+            sourceCreep : {
+                workNum : 2,
+                workBody : [WORK, WORK, WORK, WORK, CARRY, CARRY],
+                carryPerWork : 2,
+                carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
+            },
+            sites : {
+                extentions : 10,
+                tower : 1,
+                link : 1,
+            },
 
         },
         7 : {
+            sourceCreep : {
+                workNum : 2,
+                workBody : [WORK, WORK, WORK, WORK, CARRY, CARRY],
+                carryPerWork : 2,
+                carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
+            },
+            sites : {
+                extentions : 10,
+                tower : 1,
+                link : 1,
+            },
 
         },
         8 : {
+            sourceCreep : {
+                workNum : 2,
+                workBody : [WORK, WORK, WORK, WORK, CARRY, CARRY],
+                carryPerWork : 2,
+                carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
+            },
+            sites : {
+                extentions : 10,
+                tower : 1,
+                link : 1
+            },
 
         },
      },

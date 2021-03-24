@@ -1,7 +1,8 @@
 const creepManager = require('./creepManager')
 const structureManager = require('structureManager')
 
-function execOnce(lv, sp) {
+//被回收可能会再次执行，但无所谓
+let execOnce = function(lv, sp) {
     let uniName = 'site_' + lv
     if (!(global[uniName])) {
         structureManager.createSites(lv, sp);

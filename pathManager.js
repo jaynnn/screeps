@@ -8,7 +8,7 @@ pathManager.init = function(sp) {
 }
 
 pathManager.genPosKey = function(roomName, x, y) {
-    return roomName + "_" + x + "_" + y;
+    return roomName + "#" + x + "_" + y;
 }
 
 pathManager.createPath = function(room, startPos, endPos) {
@@ -83,6 +83,16 @@ pathManager.getPathTo = function(room, startPos, endPos) {
         posKey : posKey,
         path : Memory.paths[posKey]
     }
+}
+
+pathManager.getRoomPaths = function(room) {
+    let list = [];
+    for (let pathKey in Memory.paths) {
+        if (pathKey.split("#")[0] == room.name) {
+            list = pathManager.concatPath(room, list, room.deserializePath(Memory.paths[pathKey]));
+        }
+    }
+    return list;
 }
 
 module.exports = pathManager
