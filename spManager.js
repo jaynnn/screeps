@@ -31,8 +31,9 @@ spManager.init = function(sp) {
 spManager.run = function(sp) {
     let isOk = true
     for (let i = 0; i < config.spQueueLv; i++) {
-        while (!queue.isEmpty(sp.memory.queues[i])) {
-            let aCreep = queue.peek(sp.memory.queues[i]);
+        let q = sp.memory.queues[i];
+        while (!queue.isEmpty(q)) {
+            let aCreep = queue.peek(q);
             let goSource = aCreep.goSourceId && Gmae.findObjectById(aCreep.goSourceId) || {};
             let destinationId = goSource.id
             switch (!destinationId && i) {
@@ -56,10 +57,10 @@ spManager.run = function(sp) {
             if (ret == OK) {
                 sourceManager.onCreepBorn(aCreep, goSource.id);
                 creepManager.onCreepBorn(aCreep);
-                queue.dequeue(sp.memory.queues[i]);
+                queue.dequeue(q);
     
                 let cb = function() {
-                    queue.enqueue(sp.memory.queues[i], aCreep);
+                    queue.enqueue(q, aCreep);
                     flagManager.delFlag(creepName);
                 }
                 timerManager.setAlarm(cb, config.creepDeadTime);

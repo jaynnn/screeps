@@ -2,8 +2,6 @@ const creepManager = require('./creepManager')
 const structureManager = require('structureManager');
 const config = require('./config');
 
-
-
 let creepBorner = function(sp, lvCfg) {
     if (creepManager.getCreepNum(config.creepType.upper) < lvCfg.otherCreep.upperNum) {
         creepManager.createCreep(sp, config.spQueueLvs.normal, {

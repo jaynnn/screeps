@@ -89,4 +89,27 @@ structureManager.createSite = function(lv, sp) {
     structureManager.buildTower(sp, lvCfg.sites.tower);
 }
 
+structureManager.runTower = function(sp){
+    let towers = sp.room.find(FIND_STRUCTURES, {
+        _filter : (structure) => {
+            return structure.STRUCTURE_TYPE == STRUCTURE_TOWER;
+        }
+    })
+    if (towers.length) {
+        for (let i in towers) {
+            let tower = towers[i];
+            var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
+                filter: (structure) => structure.hits < structure.hitsMax
+            });
+            if(closestDamagedStructure) {
+                tower.repair(closestDamagedStructure);
+            }
+        }
+    }
+}
+
+structureManager.run = function(sp) {
+    structureManager.runTower(sp);
+}
+
 module.exports = structureManager;
