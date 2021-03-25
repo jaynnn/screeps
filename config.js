@@ -9,6 +9,12 @@ const utils = require("./utils");
                 carryPerWork : 2,
                 carryBody : [MOVE, MOVE, CARRY, CARRY, CARRY, CARRY],
             },
+            otherCreep : {
+                upperNum : 1,
+                builder : 1,
+                upper : [MOVE, CARRY, WORK],
+                builder : [MOVE, CARRY, WORK],
+            },
         },
         1 : {
             sourceCreep : {
@@ -17,6 +23,10 @@ const utils = require("./utils");
                 carryPerWork : 3,
                 carryBody : [MOVE, MOVE, CARRY, CARRY, CARRY, CARRY],
             },
+            otherCreep : {
+                upper : [MOVE, CARRY, WORK],
+                builder : [MOVE, CARRY, WORK],
+            },
         },
         2 : {
             sourceCreep : {
@@ -24,6 +34,10 @@ const utils = require("./utils");
                 workBody : [WORK, WORK, WORK, WORK, CARRY, CARRY],
                 carryPerWork : 3,
                 carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
+            },
+            otherCreep : {
+                upper : [MOVE, CARRY, WORK, MOVE, CARRY, WORK],
+                builder : [MOVE, CARRY, WORK, MOVE, CARRY, WORK],
             },
             sites : {
                 extentions : 5,
@@ -37,6 +51,11 @@ const utils = require("./utils");
                 carryPerWork : 3,
                 carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
             },
+            otherCreep : {
+                upper : [MOVE, CARRY, WORK, MOVE, CARRY, WORK],
+                builder : [MOVE, CARRY, WORK, MOVE, CARRY, WORK],
+                towerGiver : [MOVE, CARRY, WORK, MOVE, CARRY, WORK],
+            },
             sites : {
                 extentions : 5,
                 tower : 1,
@@ -49,6 +68,11 @@ const utils = require("./utils");
                 workBody : [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY],
                 carryPerWork : 4,
                 carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
+            },
+            otherCreep : {
+                upper : [MOVE, CARRY, WORK, MOVE, CARRY, WORK],
+                builder : [MOVE, CARRY, WORK, MOVE, CARRY, WORK],
+                towerGiver : [MOVE, CARRY, WORK, MOVE, CARRY, WORK],
             },
             sites : {
                 extentions : 10,
@@ -65,6 +89,11 @@ const utils = require("./utils");
                 carryPerWork : 4,
                 carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
             },
+            otherCreep : {
+                upper : [MOVE, CARRY, WORK, MOVE, CARRY, WORK,MOVE, CARRY, WORK, MOVE, CARRY, WORK],
+                builder : [MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK],
+                towerGiver : [MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK],
+            },
             sites : {
                 extentions : 10,
                 tower : 1,
@@ -78,6 +107,11 @@ const utils = require("./utils");
                 workBody : [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY],
                 carryPerWork : 4,
                 carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
+            },
+            otherCreep : {
+                upper : [MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK],
+                builder : [MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK],
+                towerGiver : [MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK],
             },
             sites : {
                 extentions : 10,
@@ -93,6 +127,11 @@ const utils = require("./utils");
                 carryPerWork : 4,
                 carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
             },
+            otherCreep : {
+                upper : [MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK],
+                builder : [MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK],
+                towerGiver : [MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK],
+            },
             sites : {
                 extentions : 10,
                 tower : 1,
@@ -106,6 +145,11 @@ const utils = require("./utils");
                 workBody : [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY],
                 carryPerWork : 4,
                 carryBody : [MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY],
+            },
+            otherCreep : {
+                upper : [MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK],
+                builder : [MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK],
+                towerGiver : [MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK, MOVE, CARRY, WORK],
             },
             sites : {
                 extentions : 10,

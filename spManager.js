@@ -18,10 +18,10 @@ spManager.init = function(sp) {
         creepManager.init();
         sp.memory.queues = {};
         for (let i = 0; i < config.spQueueLv; i++) {
-            sp.memory.queues[i] = new queue();
+            sp.memory.queues[i] = queue.new();
             if (i==config.spQueueLvs.base) {
-                sp.memory.queues[i].enqueue(config.baseCfg.creep);
-                sp.memory.queues[i].enqueue(config.baseCfg.dragCreep);
+                queue.enqueue(sp.memory.queues[i], config.baseCfg.creep);
+                queue.enqueue(sp.memory.queues[i], config.baseCfg.dragCreep);
             }
         }
     }
@@ -31,8 +31,8 @@ spManager.init = function(sp) {
 spManager.run = function(sp) {
     let isOk = true
     for (let i = 0; i < config.spQueueLv; i++) {
-        while (!sp.memory.queues[i].isEmpty()) {
-            let aCreep = sp.memory.queues[i].peek();
+        while (!queue.isEmpty(sp.memory.queues[i])) {
+            let aCreep = queue.peek(sp.memory.queues[i]);
             let goSource = aCreep.goSourceId && Gmae.findObjectById(aCreep.goSourceId) || {};
             let destinationId = goSource.id
             switch (!destinationId && i) {
@@ -53,12 +53,13 @@ spManager.run = function(sp) {
                     destinationId : goSource.id
                 }
             });
-            if (ret == 0) {
+            if (ret == OK) {
                 sourceManager.onCreepBorn(aCreep, goSource.id);
-                sp.memory.queues[i].dequeue();
+                creepManager.onCreepBorn(aCreep);
+                queue.dequeue(sp.memory.queues[i]);
     
                 let cb = function() {
-                    sp.memory.queues[i].enqueue(aCreep);
+                    queue.enqueue(sp.memory.queues[i], aCreep);
                     flagManager.delFlag(creepName);
                 }
                 timerManager.setAlarm(cb, config.creepDeadTime);

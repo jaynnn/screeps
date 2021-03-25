@@ -24,21 +24,23 @@ sourceManager.run = function(sp) {
     for (let i in Memory.sources) {
         let source = Memory.sources[i];
         let lvCfg = config.levelCfg[utils.getControlerLv(sp)];
-        if (Memory.soureCreep.workNum < source.maxWorkNum) {
-            let leftWork = Math.ceil((source.maxWorkNum - Memory.soureCreep.workNum) /  lvCfg.workNum)
-            let leftCarry = leftWork * lvCfg.carryPerWork
+        let memorySource = Memory.sources[source.id];
+        if (memorySource.workNum < memorySource.maxWorkNum) {
+            let leftWork = Math.ceil((source.maxWorkNum - memorySource.workNum) /  lvCfg.workNum)
+            let leftCarry = leftWork * lvCfg.sourceCreep.carryPerWork
             while(leftWork--) {
                 creepManager.createCreep(sp, config.spQueueLvs.normal, {
                     role : config.creepType.soWorker,
                     goSourceId : source.id,
-                    body : lvCfg.workBody,
+                    body : lvCfg.sourceCreep.workBody,
                 });
+                memorySource.workNum += 2;
             }
             while(leftCarry--) {
                 creepManager.createCreep(sp, config.spQueueLvs.normal, {
                     role : config.creepType.soCarryer,
                     goSourceId : source.id,
-                    body : lvCfg.carryBody,
+                    body : lvCfg.sourceCreep.carryBody,
                 });
             }
 

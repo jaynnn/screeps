@@ -1,6 +1,7 @@
 const config = require("./config");
 const flagManager = require("./flagManager");
 const pathManager = require("./pathManager");
+const queue = require('queue')
 
 let creepManager = {}
 
@@ -129,7 +130,17 @@ creepManager.type2Deal = {
 }
 
 creepManager.createCreep = function(sp, queueLv, creepObj) {
-    sp.memory.queues[queueLv].enqueue(creepObj);
+    queue.enqueue(sp.memory.queues[queueLv], creepObj);
+}
+
+creepManager.onCreepBorn = function(creep) {
+    Memory.creepCounter = Memory.creepCounter || {};
+    Memory.creepCounter[creep.role] = (Memory.creepCounter[creep.role] || 0) + 1;
+}
+
+creepManager.getCreepNum = function(role) {
+    Memory.creepCounter = Memory.creepCounter || {};
+    return Memory.creepCounter[role] || 0;
 }
 
 creepManager.run = function() {
