@@ -10,28 +10,26 @@ sourceManager.init = function(sp) {
     for (let j in sources) {
         let source = sources[j];
         Memory.sources[source.id] = {
-            maxWorkNum : (source.energyCapacity / 300 ) / (2 + 1), // work and drop
+            maxWorkNum : Math.ceil((source.energyCapacity / 300 ) / (2 + 1)), // work and drop
             workNum : 0
         };
     }
 }
 
 sourceManager.onCreepBorn = function(creep, sourceId) {
-    Memory.sources[sourceId].workNum = utils.getCreepBodyNumByType(creep, WORK);
 }
 
 sourceManager.run = function(sp) {
-    for (let i in Memory.sources) {
-        let source = Memory.sources[i];
+    for (let sourceId in Memory.sources) {
+        let memorySource = Memory.sources[sourceId];
         let lvCfg = config.levelCfg[utils.getControlerLv(sp)];
-        let memorySource = Memory.sources[source.id];
         if (memorySource.workNum < memorySource.maxWorkNum) {
-            let leftWork = Math.ceil((source.maxWorkNum - memorySource.workNum) /  lvCfg.workNum)
+            let leftWork = Math.ceil((memorySource.maxWorkNum - memorySource.workNum) /  lvCfg.workNum)
             let leftCarry = leftWork * lvCfg.sourceCreep.carryPerWork
             while(leftWork--) {
                 creepManager.createCreep(sp, config.spQueueLvs.normal, {
                     role : config.creepType.soWorker,
-                    goSourceId : source.id,
+                    goSourceId : sourceId,
                     body : lvCfg.sourceCreep.workBody,
                 });
                 memorySource.workNum += 2;
@@ -39,7 +37,7 @@ sourceManager.run = function(sp) {
             while(leftCarry--) {
                 creepManager.createCreep(sp, config.spQueueLvs.normal, {
                     role : config.creepType.soCarryer,
-                    goSourceId : source.id,
+                    goSourceId : sourceId,
                     body : lvCfg.sourceCreep.carryBody,
                 });
             }

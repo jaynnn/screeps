@@ -15,6 +15,7 @@ const utils = require("./utils");
                 upper : [MOVE, CARRY, WORK],
                 builder : [MOVE, CARRY, WORK],
             },
+            sites : {},
         },
         1 : {
             sourceCreep : {
@@ -27,6 +28,7 @@ const utils = require("./utils");
                 upper : [MOVE, CARRY, WORK],
                 builder : [MOVE, CARRY, WORK],
             },
+            sites : {},
         },
         2 : {
             sourceCreep : {

@@ -35,27 +35,27 @@ spManager.run = function(sp) {
         while (!queue.isEmpty(q)) {
             let aCreep = queue.peek(q);
             let goSource = aCreep.goSourceId && Gmae.findObjectById(aCreep.goSourceId) || {};
-            let destinationId = goSource.id
+            let destinationId = aCreep.goSourceId
             switch (!destinationId && i) {
                 case config.spQueueLvs.base :
                     goSource = sp.pos.findClosestByRange(FIND_SOURCES)[0];
                     break;
+                
                 default:
                     console.log("ERROR!!!!! no destination!!!");
                     break;
             }
             let creepName = utils.genCreepName(aCreep.role)
             let ret = sp.spawnCreep(aCreep.body, creepName, {
-                dryRun : true,
                 directions : sp.pos.getDirectionTo(goSource),
                 memory : {
                     role : aCreep.role,
                     status : config.creepStatus.free,
-                    destinationId : goSource.id
+                    destinationId : destinationId
                 }
             });
             if (ret == OK) {
-                sourceManager.onCreepBorn(aCreep, goSource.id);
+                sourceManager.onCreepBorn(aCreep, destinationId);
                 creepManager.onCreepBorn(aCreep);
                 queue.dequeue(q);
     

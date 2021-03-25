@@ -1,7 +1,8 @@
 const config = require("./config");
 const flagManager = require("./flagManager");
 const pathManager = require("./pathManager");
-const queue = require('queue')
+const queue = require('queue');
+const logger =require('logger');
 
 let creepManager = {}
 
@@ -13,7 +14,12 @@ creepManager.takeDrop2Func ={
     [config.takeDropsTo.toControler] : function(creep) {
         if (creep.upgradeController(creep.room.controler) == ERR_NOT_IN_RANGE) {
             let pathObj = pathManager.getPathTo(creep.room, creep.pos, creep.room.controler);
-            creep.moveByPath(pathObj.path);
+            let ret = creep.moveByPath(pathObj.path);
+            if (ret != OK) {
+                console.log("toControler ERROR=", ret)
+                return;
+            }
+            logger.sayLog("upgrading~ 🏃")
         }
     },
     [config.takeDropsTo.toStructure] : function(creep, structures) {
@@ -26,7 +32,12 @@ creepManager.takeDrop2Func ={
         if(targets.length > 0) {
             if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {   
                 let pathObj = pathManager.getPathTo(creep.room, creep.pos, targets[0].pos);
-                creep.moveByPath(pathObj.path);
+                let ret = creep.moveByPath(pathObj.path);
+                if (ret != OK) {
+                    console.log("toStructure ERROR=", ret)
+                    return;
+                }
+                logger.sayLog("to structures 😵")
             }
         }
     },
@@ -39,7 +50,12 @@ creepManager.takeDrop2Func ={
                     tmpPath = pathManager.createTmpPath(creep.room, creep.pos, target.pos);
                     creep.memory.tmpPath = tmpPath
                 }
-                creep.moveByPath(tmpPath);
+                let ret = creep.moveByPath(pathObj.path);
+                if (ret != OK) {
+                    console.log("toSite ERROR=", ret)
+                    return;
+                }
+                logger.sayLog("to sites 🏃")
             } else {
                 creep.memory.tmpPath = undefined;
             }
@@ -52,7 +68,12 @@ creepManager.commonMove = function(creep, destPos) {
     if (creep.moveByPath(myPath) == ERR_NOT_FOUND) {
         myPath = pathManager.findBranchPath(creep.room, creep.pos, myPath);
     }
-    creep.moveByPath(myPath);
+    let ret = creep.moveByPath(myPath);
+    if (ret != OK) {
+        console.log("common move ERROR=", ret)
+        return;
+    }
+    logger.sayLog("moving~ 💨");
 }
 
 creepManager.takeBackDrops = function(creep, dests, toWhere) {
@@ -72,10 +93,15 @@ creepManager.type2Deal = {
             const source = Game.getObjectById(creep.memory.destinationId);
             if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
                 let pathObj = pathManager.getPathTo(creep.room, creep.pos, source.pos);
-                creep.moveByPath(pathObj.path);
+                let ret = creep.moveByPath(pathObj.path);
+                if (ret != OK) {
+                    console.log("base move ERROR=", ret);
+                    return;
+                }
+                logger.sayLog("hangry 😋")
             }
         } else {
-            creepManager.takeBackResource(creep, [STRUCTURE_SPAWN]);
+            creepManager.takeDrop2Func[config.takeDropsTo.toStructure](creep, [STRUCTURE_SPAWN]);
         }
     },
     [config.creepType.drager] : function(creep) {
@@ -93,12 +119,17 @@ creepManager.type2Deal = {
                     tmpPath = pathManager.createTmpPath(creep.room, creep.pos, target.pos)
                     creep.memory.tmpPath = tmpPath
                 }
-                creep.moveByPath(tmpPath);
+                let ret = creep.moveByPath(tmpPath);
+                if (ret != OK) {
+                    console.log("drager move ERROR=", ret);
+                } 
+                logger.sayLog("pull someone 💪")
             } else {
                 if (tmpPath) creep.memory.tmpPath = undefined;
                 target.move(creep);
                 if(creep.pos.isNearTo(Game.getObjectById(target.memory.destinationId))) {
                     creep.move(creep.pos.getDirectionTo(target));
+                    logger.sayLog("following 👬");
                 } else {
                     let destObj = Game.getObjectById(target.memory.destinationId);
                     creepManager.commonMove(creep, destObj.pos);
@@ -134,13 +165,13 @@ creepManager.createCreep = function(sp, queueLv, creepObj) {
 }
 
 creepManager.onCreepBorn = function(creep) {
-    Memory.creepCounter = Memory.creepCounter || {};
-    Memory.creepCounter[creep.role] = (Memory.creepCounter[creep.role] || 0) + 1;
+    Memory.creepCounters = Memory.creepCounters || {};
+    Memory.creepCounters[creep.role] = (Memory.creepCounters[creep.role] || 0) + 1;
 }
 
 creepManager.getCreepNum = function(role) {
-    Memory.creepCounter = Memory.creepCounter || {};
-    return Memory.creepCounter[role] || 0;
+    Memory.creepCounters = Memory.creepCounters || {};
+    return Memory.creepCounters[role] || 0;
 }
 
 creepManager.run = function() {

@@ -2,7 +2,7 @@ let Queue =  {}
 Queue.new = function() {
     return {
         a : [],
-        b = 0
+        b : 0
     }
 }
 Queue.getLength=function(q) {

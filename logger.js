@@ -44,8 +44,15 @@ let logging = function(args) {
 
 module.exports = {
     log : function() {
+        let str = "";
         for (var i=0; i<arguments.length; i++) {
-            console.log(logging(arguments[i]));
+            str = str + " " + logging(arguments[i]);
         }
+        console.log(str);
     },
+
+    sayLog(creep, msg) {
+        creep.say(creep.name + msg);
+        console.log(creep.name + msg);
+    }
 };
