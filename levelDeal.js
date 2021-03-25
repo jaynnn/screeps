@@ -2,14 +2,7 @@ const creepManager = require('./creepManager')
 const structureManager = require('structureManager');
 const config = require('./config');
 
-//被回收可能会再次执行，但无所谓
-let execOnce = function(lv, sp) {
-    let uniName = 'site_' + lv
-    if (!(global[uniName])) {
-        structureManager.createSites(lv, sp);
-        global.uniName = true;
-    }
-}
+
 
 let creepBorner = function(sp, lvCfg) {
     if (creepManager.getCreepNum(config.creepType.upper) < lvCfg.otherCreep.upperNum) {
@@ -23,6 +16,17 @@ let creepBorner = function(sp, lvCfg) {
             role : config.creepType.builder,
             body : lvCfg.otherCreep.builder,
         });
+    }
+}
+
+//被回收可能会再次执行，但无所谓
+let execOnce = function(lv, sp) {
+    let uniName = 'site_' + lv
+    if (!(global[uniName])) {
+        structureManager.createSites(lv, sp);
+        let cfg = config.lvCfg[lv];
+        creepBorner(sp, cfg);
+        global.uniName = true;
     }
 }
 
@@ -58,8 +62,6 @@ let deals ={
 
 let run = function(lv, sp) {
     execOnce(lv, sp);
-    let cfg = config.lvCfg[lv];
-    creepBorner(sp, cfg);
     deals[lv](sp, cfg);
     creepManager.run();
 }
