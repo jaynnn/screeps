@@ -29,10 +29,9 @@ spManager.init = function(sp) {
 },
 
 spManager.run = function(sp) {
-    let isOk = true
     for (let i = 0; i < config.spQueueLv; i++) {
         let q = sp.memory.queues[i];
-        while (!queue.isEmpty(q)) {
+        if (!queue.isEmpty(q)) {
             let aCreep = queue.peek(q);
             let goSource = aCreep.goSourceId && Gmae.findObjectById(aCreep.goSourceId) || {};
             let destinationId = goSource.id
@@ -67,12 +66,10 @@ spManager.run = function(sp) {
     
                 logger.log("spManager|| a creep born", aCreep);
             } else {
-                isOk = false
                 loggger.log("try spawn creep but ret =", ret);
-                break;
             }
+            break;
         }
-        if (!isOk) break;
     }
 }
 
