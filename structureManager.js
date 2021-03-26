@@ -81,8 +81,8 @@ structureManager.buildTower = function(sp, num){
     }
 }
 
-structureManager.createSite = function(lv, sp) {
-    let lvCfg = config.lvCfg[lv];
+structureManager.createSites = function(lv, sp) {
+    let lvCfg = config.levelCfg[lv];
     structureManager.buildRoad(sp);
     structureManager.buildExtension(sp, lvCfg.sites.extension);
     structureManager.buildLink(sp, lvCfg.sites.link);

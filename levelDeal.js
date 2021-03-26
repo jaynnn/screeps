@@ -18,11 +18,10 @@ let creepBorner = function(sp, lvCfg) {
 }
 
 //被回收可能会再次执行，但无所谓
-let execOnce = function(lv, sp) {
+let execOnce = function(lv, sp, cfg) {
     let uniName = 'site_' + lv
     if (!(global[uniName])) {
         structureManager.createSites(lv, sp);
-        let cfg = config.lvCfg[lv];
         creepBorner(sp, cfg);
         global.uniName = true;
     }
@@ -59,7 +58,8 @@ let deals ={
 }
 
 let run = function(lv, sp) {
-    execOnce(lv, sp);
+    let cfg = config.levelCfg[lv];
+    execOnce(lv, sp, cfg);
     deals[lv](sp, cfg);
     creepManager.run();
 }
