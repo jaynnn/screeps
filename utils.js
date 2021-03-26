@@ -16,8 +16,7 @@ var utils = {
     },
 
     getCreepCounter : function() {
-        Memory.creepCounter = (Memory.creepCounter || 0) + 1
-        return Memory.creepCounter
+        return Memory.creepCounters || 0
     },
 
     getControlerLv : function(sp) {
